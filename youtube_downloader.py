@@ -42,10 +42,8 @@ def download_video(url):
         print(f"エラー: {str(e)}")
 
 def main():
-    user_url = "https://www.youtube.com/@xxxxxxxxxxx"
-    #video_urls = get_video_urls(user_url)
     video_urls = [
-        "https://www.youtube.com/watch?v=xxxxxxxxxx",
+        "https://www.youtube.com/watch?v=LvxI1v5fVYo&t=53s",
     ]
     print("video_urls:", video_urls)
     for url in video_urls:
