@@ -1,54 +1,26 @@
-import time
-from bs4 import BeautifulSoup
-from pytube import YouTube
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
+import yt_dlp
+import os
 
-def get_video_urls(user_url):
-    driver_path = "/opt/homebrew/bin/chromedriver"
+def download_youtube_video(url, output_dir):
+    ydl_opts = {
+        'format': 'bestvideo[height<=1080]+bestaudio/best[height<=1080]',
+        'outtmpl': os.path.join(output_dir, '%(title)s.%(ext)s'),
+        'merge_output_format': 'mp4',
+    }
 
-    service = Service(driver_path)
-    driver = webdriver.Chrome(service=service)
-    driver.get(user_url + "/videos")
-
-    popular_videos_link = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//yt-formatted-string[contains(text(), '人気の動画')]"))
-    )
-    popular_videos_link.click()
-    print("clicked popular videos link. waiting for 5 seconds...")
-    time.sleep(5)
-
-    soup = BeautifulSoup(driver.page_source, "html.parser")
-    video_urls = []
-    for link in soup.find_all("a", class_="yt-simple-endpoint style-scope ytd-grid-video-renderer"):
-        video_url = f"https://www.youtube.com{link['href']}"
-        video_urls.append(video_url)
-
-    driver.quit()
-    return video_urls[:30]
-
-def download_video(url):
     try:
-        video = YouTube(url)
-        stream = video.streams.get_highest_resolution()
-        print(f"ダウンロード中: {video.title}")
-        stream.download()
-        print("ダウンロード完了!")
-
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([url])
+        print("ダウンロードが完了しました。")
     except Exception as e:
-        print(f"エラー: {str(e)}")
-
-def main():
-    video_urls = [
-        "https://www.youtube.com/watch?v=LvxI1v5fVYo&t=53s",
-    ]
-    print("video_urls:", video_urls)
-    for url in video_urls:
-        download_video(url)
-    print("All videos downloaded!")
+        print(f"エラーが発生しました: {e}")
 
 if __name__ == "__main__":
-    main()
+    video_url = input("Please input YouTube URL: ")
+    output_dir = "download"
+
+    # downloadディレクトリが存在しない場合は作成
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    download_youtube_video(video_url, output_dir)
