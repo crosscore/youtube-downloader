@@ -4,5 +4,7 @@ mp4_files/
 warehouse/
 mp4/
 mp3/
+wav/
 *.mp3
 *.mp4
+*.wav
