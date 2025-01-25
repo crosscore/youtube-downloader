@@ -11,15 +11,14 @@ def download_youtube_video(url, output_dir):
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([url])
-        print("ダウンロードが完了しました。")
+        print("Download completed.")
     except Exception as e:
-        print(f"エラーが発生しました: {e}")
+        print(f"An error occurred: {e}")
 
 if __name__ == "__main__":
     video_url = input("Please input YouTube URL: ")
-    output_dir = "download"
+    output_dir = "mp4"
 
-    # downloadディレクトリが存在しない場合は作成
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 

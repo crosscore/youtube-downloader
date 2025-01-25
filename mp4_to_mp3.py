@@ -1,15 +1,14 @@
 import os
-from moviepy.editor import *
+from moviepy import VideoFileClip
 
 def convert_mp4_to_mp3(mp4_path, mp3_path):
     video = VideoFileClip(mp4_path)
     video.audio.write_audiofile(mp3_path)
 
 def main():
-    mp4_folder = 'mp4_files'
-    mp3_folder = 'mp3_files'
+    mp4_folder = 'download'
+    mp3_folder = 'mp3'
 
-    # フォルダが存在しない場合は作成
     if not os.path.exists(mp4_folder):
         os.makedirs(mp4_folder)
     if not os.path.exists(mp3_folder):

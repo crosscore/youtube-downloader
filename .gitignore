@@ -2,4 +2,7 @@
 mp3_files/
 mp4_files/
 warehouse/
-download/
+mp4/
+mp3/
+*.mp3
+*.mp4
