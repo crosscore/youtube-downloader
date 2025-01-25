@@ -9,8 +9,6 @@ def main():
     mp4_folder = 'mp4'
     mp3_folder = 'mp3'
 
-    if not os.path.exists(mp4_folder):
-        os.makedirs(mp4_folder)
     if not os.path.exists(mp3_folder):
         os.makedirs(mp3_folder)
 
