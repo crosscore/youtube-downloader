@@ -1,0 +1,42 @@
+# Core dependencies
+python-dotenv
+
+# AWS
+boto3
+
+# Utility packages
+python-dateutil
+typing-extensions
+
+# Logging and monitoring
+structlog
+
+# Development and testing
+pytest
+pytest-cov
+black
+flake8
+mypy
+
+# PDF processing
+pypdf
+pdf2image
+
+# UI
+fastapi
+uvicorn
+jinja2
+python-multipart
+
+# Whisper (speech recognition)
+openai-whisper
+torch
+
+# Audio recording
+sounddevice
+numpy
+
+# Video/audio processing
+ffmpeg-python
+yt-dlp
+moviepy
