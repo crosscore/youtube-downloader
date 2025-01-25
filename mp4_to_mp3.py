@@ -6,7 +6,7 @@ def convert_mp4_to_mp3(mp4_path, mp3_path):
     video.audio.write_audiofile(mp3_path)
 
 def main():
-    mp4_folder = 'download'
+    mp4_folder = 'mp4'
     mp3_folder = 'mp3'
 
     if not os.path.exists(mp4_folder):
