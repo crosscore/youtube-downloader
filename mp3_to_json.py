@@ -32,9 +32,9 @@ def main():
 
     for filename in os.listdir(mp3_folder):
         if filename.endswith(".mp3"):
-            wav_path = os.path.join(mp3_folder, filename)
+            mp3_path = os.path.join(mp3_folder, filename)
             output_json_path = os.path.join(output_folder, os.path.splitext(filename)[0] + '.json')
-            transcribe_audio_with_diarization(wav_path, output_json_path, num_speakers=2, add_punctuation=True)
+            transcribe_audio_with_diarization(mp3_path, output_json_path, num_speakers=2, add_punctuation=True)
 
 if __name__ == "__main__":
     main()

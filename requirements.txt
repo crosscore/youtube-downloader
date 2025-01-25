@@ -31,6 +31,7 @@ python-multipart
 # Whisper (speech recognition)
 openai-whisper
 torch
+transformers
 
 # Audio recording
 sounddevice
