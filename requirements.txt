@@ -41,3 +41,9 @@ numpy
 ffmpeg-python
 yt-dlp
 moviepy
+
+pyannote.audio
+torchaudio
+sentencepiece
+
+reazonspeech-k2-v2

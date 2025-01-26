@@ -2,6 +2,10 @@
 mp3_files/
 mp4_files/
 warehouse/
+output/
+model/
+json/
+txt/
 mp4/
 mp3/
 wav/
