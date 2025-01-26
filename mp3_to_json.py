@@ -3,20 +3,42 @@ import torch
 from transformers import pipeline
 import os
 
+def load_or_download_model(model_id, model_dir="model"):
+    if not os.path.exists(model_dir):
+        os.makedirs(model_dir)
+
+    model_path = os.path.join(model_dir, model_id.replace("/", "_"))
+
+    if not os.path.exists(model_path):
+        print(f"Downloading model {model_id}...")
+        pipe = pipeline(
+            "automatic-speech-recognition",
+            model=model_id,
+            torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
+            device="cuda:0" if torch.cuda.is_available() else "cpu",
+            model_kwargs={"attn_implementation": "sdpa"} if torch.cuda.is_available() else {},
+            batch_size=8,
+            trust_remote_code=True,
+        )
+        pipe.model.save_pretrained(model_path)
+        print(f"Model saved to {model_path}")
+    else:
+        print(f"Loading model from {model_path}")
+        pipe = pipeline(
+            "automatic-speech-recognition",
+            model=model_path,
+            torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
+            device="cuda:0" if torch.cuda.is_available() else "cpu",
+            model_kwargs={"attn_implementation": "sdpa"} if torch.cuda.is_available() else {},
+            batch_size=8,
+            trust_remote_code=True,
+        )
+
+    return pipe
+
 def transcribe_audio_with_diarization(mp3_path, output_json_path, num_speakers=None, add_punctuation=False):
     model_id = "kotoba-tech/kotoba-whisper-v2.2"
-    torch_dtype = torch.float16 if torch.cuda.is_available() else torch.float32
-    device = "cuda:0" if torch.cuda.is_available() else "cpu"
-    model_kwargs = {"attn_implementation": "sdpa"} if torch.cuda.is_available() else {}
-
-    pipe = pipeline(
-        model=model_id,
-        torch_dtype=torch_dtype,
-        device=device,
-        model_kwargs=model_kwargs,
-        batch_size=8,
-        trust_remote_code=True,
-    )
+    pipe = load_or_download_model(model_id)
 
     result = pipe(mp3_path, chunk_length_s=15, num_speakers=num_speakers, add_punctuation=add_punctuation)
 
